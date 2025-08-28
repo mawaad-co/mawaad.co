@@ -1,0 +1,27 @@
+/* Commercial features to hide */
+
+/* Teams / Routing / Workflows / Router Position */
+[data-test-id="teams" i],
+[data-testid="teams-test" i],
+[data-test-id="routing" i],
+[data-testid="routing-test" i],
+[data-test-id="workflows" i],
+[data-testid="workflows-test" i],
+[data-test-id="router_position" i],
+[data-testid="router_position-test" i],
+
+/* Teams Tab */
+[data-testid="tab-teams" i],
+[data-testid="toggle-group-item-team" i],
+
+/* Settings: Developer, Security */
+a[href="/settings/developer/api-keys"],
+a[href="/settings/security/sso"],
+a[href="/settings/security/impersonation"],
+
+/* Billing */
+[data-test-id="billing" i],
+a[href="/settings/billing"],
+[data-testid="tab-billing" i] {
+  display: none !important;
+}

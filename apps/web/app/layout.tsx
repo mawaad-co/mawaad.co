@@ -10,6 +10,7 @@ import { IconSprites } from "@calcom/ui/components/icon";
 
 import { buildLegacyRequest } from "@lib/buildLegacyCtx";
 
+import "../styles/custom.css";
 import "../styles/globals.css";
 import { AppRouterI18nProvider } from "./AppRouterI18nProvider";
 import { SpeculationRules } from "./SpeculationRules";
