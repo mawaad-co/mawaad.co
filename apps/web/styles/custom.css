@@ -9,6 +9,7 @@
 [data-testid="workflows-test" i],
 [data-test-id="router_position" i],
 [data-testid="router_position-test" i],
+[data-testid="vertical-tab-workflows" i],
 
 /* Teams Tab */
 [data-testid="tab-teams" i],
@@ -21,6 +22,7 @@ a[href="/settings/security/impersonation"],
 
 /* Billing */
 [data-test-id="billing" i],
+[title="billing" i],
 a[href="/settings/billing"],
 [data-testid="tab-billing" i] {
   display: none !important;

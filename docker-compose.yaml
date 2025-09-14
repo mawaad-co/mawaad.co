@@ -6,7 +6,7 @@ volumes:
 networks:
   stack:
     name: stack
-    external: false
+    external: true
 
 services:
   database:
@@ -18,9 +18,10 @@ services:
     env_file: .env
     networks:
       - stack
+    ports:
+      - 5432:5432
 
   calcom:
-    # image: calcom.docker.scarf.sh/calcom/cal.com
     build:
       context: .
       dockerfile: Dockerfile
@@ -44,8 +45,8 @@ services:
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
       - DATABASE_DIRECT_URL=${DATABASE_URL}
-    # depends_on:
-    #   - database
+    depends_on:
+      - database
   api:
     build:
       context: .
@@ -73,13 +74,13 @@ services:
     networks:
       - stack
     ports:
-      - 4444:4444
+      - 4444:5555
     env_file: .env
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DATABASE_HOST}/${POSTGRES_DB}
       - DATABASE_DIRECT_URL=${DATABASE_URL}
-    # depends_on:
-    #   - database
+    depends_on:
+      - database
     command:
       - npx
       - prisma

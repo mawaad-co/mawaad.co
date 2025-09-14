@@ -1,3 +1,7 @@
 .git
 .github
 .env.example
+.env
+.env.api
+.turbo
+node_modules
