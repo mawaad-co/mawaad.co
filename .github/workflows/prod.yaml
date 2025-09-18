@@ -1,0 +1,62 @@
+name: Prod CI/CD Workflow
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+
+    - name: Configure AWS credentials from GitHub OIDC
+      id: configure-aws-credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ vars.PROD_AWS_ROLE_ARN }}
+        aws-region: ${{ vars.AWS_REGION }}
+    
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v6
+      with:
+        file: Dockerfile
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}-prod:${{ github.sha }}
+        tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.PROD_ECR_REPO_NAME }}:${{ github.sha }}
+
+  # CD:
+  #   needs: CI
+  #   runs-on: ubuntu-latest
+  #   steps:
+      # - name: Configure AWS credentials from GitHub OIDC
+      #   id: configure-aws-credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     role-to-assume: ${{ vars.PROD_AWS_ROLE_ARN }}
+      #     aws-region: ${{ vars.AWS_REGION }}
+
+  #     - name: Backend ECS update
+  #       uses: donaldpiret/ecs-deploy@v0.2.0
+  #       with:
+  #         cluster: main-cluster
+  #         target: backend-service
+  #         tag: ${{ github.sha }}
+  #         rollback: true
+  #         timeout: 300
