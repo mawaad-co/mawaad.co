@@ -63,6 +63,12 @@ export function useBottomNavItems({
       },
       icon: "copy",
     },
+    {
+      name: "Advanced settings",
+      href: "/api/settings/sso?redirect=/billing",
+      icon: "settings",
+      target: "_blank",
+    },
     IS_DUB_REFERRALS_ENABLED
       ? {
           name: "referral_text",

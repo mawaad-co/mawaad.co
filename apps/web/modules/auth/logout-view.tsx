@@ -21,6 +21,12 @@ export function Logout(props: PageProps) {
   const { status } = useSession();
   if (status === "authenticated") signOut({ redirect: false });
   const router = useRouter();
+  // After Cal session is cleared, chain logout through settings to clear ms.* cookies too
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/api/settings/logout");
+    }
+  }, [status, router]);
   useEffect(() => {
     if (props.query?.survey === "true") {
       router.push(`${WEBSITE_URL}/cancellation`);
@@ -37,7 +43,7 @@ export function Logout(props: PageProps) {
 
   const navigateToLogin = () => {
     setBtnLoading(true);
-    router.push("/auth/login");
+    router.push("/api/settings/logout");
   };
 
   return (

@@ -36,6 +36,8 @@ services:
         CALENDSO_ENCRYPTION_KEY: ${CALENDSO_ENCRYPTION_KEY}
         DATABASE_URL: ${DATABASE_URL}
         DATABASE_DIRECT_URL: ${DATABASE_URL}
+        # CAL_TO_SETTINGS_SSO_SECRET: ${CAL_TO_SETTINGS_SSO_SECRET}
+        # SETTINGS_SSO_URL: ${SETTINGS_SSO_URL}
     restart: always
     networks:
       - stack
