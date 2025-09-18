@@ -39,7 +39,7 @@ jobs:
         file: Dockerfile
         context: .
         push: true
-        tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.PROD_ECR_REPO_NAME }}:${{ github.sha }}
+        tags: ${{ steps.login-ecr.outputs.registry }}/${{ vars.PROD_ECR_REPO_NAME }}:${{ github.sha }}
 
   # CD:
   #   needs: CI
