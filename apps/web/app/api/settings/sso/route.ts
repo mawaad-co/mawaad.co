@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import jwt from "jsonwebtoken";
 import { headers, cookies } from "next/headers";
 import { NextResponse } from "next/server";
@@ -21,11 +22,7 @@ export async function GET(req: Request) {
     return NextResponse.redirect(`/auth/login?callbackUrl=${cb}`);
   }
 
-  // Derive org id (teams or personal org)
-  const orgId =
-    (session.user as any).org?.id ||
-    (session.user as any).profile?.organizationId ||
-    `org_${session.user.id}`;
+  const orgId = session.user.org?.id ?? session.user.profile?.organizationId ?? `org_${session.user.id}`;
 
   const search = new URL(req.url).searchParams;
   const redirectPath = search.get("redirect") || "/billing";
@@ -46,11 +43,10 @@ export async function GET(req: Request) {
     name: session.user.name ?? "",
     iat: Math.floor(Date.now() / 1000),
     exp: Math.floor(Date.now() / 1000) + 60,
-    nonce: (globalThis.crypto || crypto).randomUUID(),
+    nonce: randomUUID(),
   } as const;
 
   const token = jwt.sign(payload, secret, { algorithm: "HS256" });
-
   const url = new URL(ssoUrl);
   url.searchParams.set("token", token);
   url.searchParams.set("redirect", redirectPath);
