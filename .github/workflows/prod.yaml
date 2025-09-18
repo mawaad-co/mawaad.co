@@ -38,7 +38,6 @@ jobs:
         file: Dockerfile
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}-prod:${{ github.sha }}
         tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.PROD_ECR_REPO_NAME }}:${{ github.sha }}
 
   # CD:
