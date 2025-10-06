@@ -131,7 +131,7 @@ export function SideBar({ bannersHeight, user }: SideBarProps) {
                   <UserDropdown small />
                 </div>
               )}
-              <KBarTrigger />
+              {/* <KBarTrigger /> */}
             </div>
           </header>
           {/* logo icon for tablet */}

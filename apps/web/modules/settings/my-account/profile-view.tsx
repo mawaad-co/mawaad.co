@@ -285,7 +285,7 @@ const ProfileView = ({ user }: Props) => {
           setShowCreateAccountPasswordDialog(true);
         }}
         extraField={
-          <div className="mt-6">
+          <div className="mt-6 pointer-events-none opacity-70">
             <UsernameAvailabilityField
               onSuccessMutation={async () => {
                 showToast(t("settings_updated_successfully"), "success");
@@ -638,10 +638,10 @@ const ProfileForm = ({
           />
         </div>
         {extraField}
-        <p className="text-subtle mt-1 flex gap-1 text-sm">
+        {/* <p className="text-subtle mt-1 flex gap-1 text-sm">
           <Icon name="info" className="mt-0.5 flex-shrink-0" />
           <span className="flex-1">{t("tip_username_plus")}</span>
-        </p>
+        </p> */}
         <div className="mt-6">
           <TextField label={t("full_name")} {...formMethods.register("name")} />
         </div>

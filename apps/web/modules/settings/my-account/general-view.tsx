@@ -314,7 +314,7 @@ const GeneralView = ({ user, travelSchedules }: GeneralViewProps) => {
           </SectionBottomActions>
         </Form>
 
-        <SettingsToggle
+        {/* <SettingsToggle
           toggleSwitchAtTheEnd={true}
           title={t("dynamic_booking")}
           description={t("allow_dynamic_booking")}
@@ -352,7 +352,7 @@ const GeneralView = ({ user, travelSchedules }: GeneralViewProps) => {
             mutation.mutate({ receiveMonthlyDigestEmail: checked });
           }}
           switchContainerClassName="mt-6"
-        />
+        /> */}
         <TravelScheduleModal
           open={isTZScheduleOpen}
           onOpenChange={() => setIsTZScheduleOpen(false)}

@@ -703,7 +703,7 @@ export const EventAdvancedTab = ({
         </>
       )}
 
-      <Controller
+      {/* <Controller
         name="canSendCalVideoTranscriptionEmails"
         render={({ field: { value, onChange } }) => (
           <SettingsToggle
@@ -725,7 +725,7 @@ export const EventAdvancedTab = ({
             onCheckedChange={(e) => onChange(e)}
           />
         )}
-      />
+      /> */}
       <Controller
         name="requiresBookerEmailVerification"
         render={({ field: { value, onChange } }) => (

@@ -57,12 +57,12 @@ const getTabs = (orgBranding: OrganizationBranding | null) => {
         { name: "2fa_auth", href: "/settings/security/two-factor-auth" },
       ],
     },
-    {
-      name: "billing",
-      href: "/settings/billing",
-      icon: "credit-card",
-      children: [{ name: "manage_billing", href: "/settings/billing" }],
-    },
+    // {
+    //   name: "billing",
+    //   href: "/settings/billing",
+    //   icon: "credit-card",
+    //   children: [{ name: "manage_billing", href: "/settings/billing" }],
+    // },
     {
       name: "developer",
       href: "/settings/developer",

@@ -29,6 +29,7 @@ export function CalAiBanner() {
   if (!(pathname === "/workflows" || pathname === "/event-types" || pathname === "/bookings/upcoming"))
     return null;
 
+  return (null);
   return (
     <div className="bg-launch-dark relative mb-6 w-full overflow-hidden rounded-lg text-white">
       <button

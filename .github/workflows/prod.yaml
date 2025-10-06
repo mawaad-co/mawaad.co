@@ -16,30 +16,91 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  CI:
-    runs-on: ubuntu-latest
+  Hello-World-Job:
+    runs-on:
+      - codebuild-mawaad-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
+      - run: echo "Hello World"
+  # WEB_CI:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v5
 
-    - name: Configure AWS credentials from GitHub OIDC
-      id: configure-aws-credentials
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        role-to-assume: ${{ vars.PROD_AWS_ROLE_ARN }}
-        aws-region: ${{ vars.AWS_REGION }}
+  #   - name: Configure AWS credentials from GitHub OIDC
+  #     id: configure-aws-credentials
+  #     uses: aws-actions/configure-aws-credentials@v4
+  #     with:
+  #       role-to-assume: ${{ vars.PROD_AWS_ROLE_ARN }}
+  #       aws-region: ${{ vars.AWS_REGION }}
     
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v2
+  #   - name: Login to Amazon ECR
+  #     id: login-ecr
+  #     uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Build Docker image
-      uses: docker/build-push-action@v6
-      with:
-        file: Dockerfile
-        context: .
-        push: true
-        tags: ${{ steps.login-ecr.outputs.registry }}/${{ vars.PROD_ECR_REPO_NAME }}:${{ github.sha }}
+  #   - name: Add .env file
+  #     run: |
+  #       rm -f .env
+  #       touch .env
+        
+  #       # Add test variables
+  #       echo "NEXT_PUBLIC_WEBAPP_URL=${{ vars.PROD_NEXT_PUBLIC_WEBAPP_URL }}" >> .env
+  #       echo "CALCOM_TELEMETRY_DISABLED=${{ vars.PROD_CALCOM_TELEMETRY_DISABLED }}" >> .env
+  #       echo "NEXTAUTH_SECRET=${{ secrets.PROD_NEXTAUTH_SECRET }}" >> .env
+  #       echo "CALENDSO_ENCRYPTION_KEY=${{ secrets.PROD_CALENDSO_ENCRYPTION_KEY }}" >> .env
+  #       echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
+  #       echo "DATABASE_DIRECT_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
+
+  #       # echo "NEXT_PUBLIC_API_V2_URL=${{ vars.PROD_NEXT_PUBLIC_API_V2_URL }}" >> .env
+  #       # echo "NEXT_PUBLIC_LICENSE_CONSENT=${{ vars.PROD_NEXT_PUBLIC_LICENSE_CONSENT }}" >> .env
+  #       # echo "NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL=${{ vars.PROD_NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL }}" >> .env
+  #       # echo "NEXT_PUBLIC_WEBSITE_TERMS_URL=${{ vars.PROD_NEXT_PUBLIC_WEBSITE_TERMS_URL }}" >> .env
+  #       echo "NEXT_PUBLIC_API_V2_URL=" >> .env
+  #       echo "NEXT_PUBLIC_LICENSE_CONSENT=" >> .env
+  #       echo "NEXT_PUBLIC_WEBSITE_PRIVACY_POLICY_URL=" >> .env
+  #       echo "NEXT_PUBLIC_WEBSITE_TERMS_URL=" >> .env
+
+  #   - name: Build Docker image
+  #     uses: docker/build-push-action@v6
+  #     with:
+  #       file: Dockerfile
+  #       context: .
+  #       push: true
+  #       tags: ${{ steps.login-ecr.outputs.registry }}/${{ vars.PROD_ECR_REPO_NAME }}:${{ github.sha }}
+
+  # API_CI:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v5
+
+  #   - name: Configure AWS credentials from GitHub OIDC
+  #     id: configure-aws-credentials
+  #     uses: aws-actions/configure-aws-credentials@v4
+  #     with:
+  #       role-to-assume: ${{ vars.PROD_AWS_ROLE_ARN }}
+  #       aws-region: ${{ vars.AWS_REGION }}
+    
+  #   - name: Login to Amazon ECR
+  #     id: login-ecr
+  #     uses: aws-actions/amazon-ecr-login@v2
+
+  #   - name: Add .env file
+  #     run: |
+  #       rm -f .env
+  #       touch .env
+        
+  #       # Add test variables
+  #       echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
+  #       echo "DATABASE_DIRECT_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
+
+  #   - name: Build Docker image
+  #     uses: docker/build-push-action@v6
+  #     with:
+  #       file: ./apps/api/v2/Dockerfile
+  #       context: .
+  #       push: true
+  #       tags: ${{ steps.login-ecr.outputs.registry }}/${{ vars.PROD_API_ECR_REPO_NAME }}:${{ github.sha }}
 
   # CD:
   #   needs: CI

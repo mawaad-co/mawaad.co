@@ -387,7 +387,7 @@ const AppearanceView = ({
         Preview
       </Button> */}
 
-          <SettingsToggle
+          {/* <SettingsToggle
             toggleSwitchAtTheEnd={true}
             title={t("disable_cal_branding", { appName: APP_NAME })}
             disabled={!hasPaidPlan || mutation?.isPending}
@@ -399,7 +399,7 @@ const AppearanceView = ({
               mutation.mutate({ hideBranding: checked });
             }}
             switchContainerClassName="mt-6"
-          />
+          /> */}
         </>
       )}
     </SettingsHeader>

@@ -10,6 +10,10 @@
 [data-test-id="router_position" i],
 [data-testid="router_position-test" i],
 [data-testid="vertical-tab-workflows" i],
+[data-test-id="insights" i],
+a[href="/insights"],
+a[href="/insights/call-history"],
+a[href="/settings/security/two-factor-auth"],
 
 /* Teams Tab */
 [data-testid="tab-teams" i],

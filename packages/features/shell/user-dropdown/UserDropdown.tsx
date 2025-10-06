@@ -170,7 +170,7 @@ export function UserDropdown({ small }: UserDropdownProps) {
                 </>
               )}
 
-              <DropdownMenuItem>
+              {/* <DropdownMenuItem>
                 <DropdownItem StartIcon="map" target="_blank" href={ROADMAP}>
                   {t("visit_roadmap")}
                 </DropdownItem>
@@ -183,14 +183,14 @@ export function UserDropdown({ small }: UserDropdownProps) {
                   onClick={handleHelpClick}>
                   {t("help")}
                 </DropdownItem>
-              </DropdownMenuItem>
-              {!isPlatformPages && (
+              </DropdownMenuItem> */}
+              {/* {!isPlatformPages && (
                 <DropdownMenuItem className="todesktop:hidden hidden lg:flex">
                   <DropdownItem StartIcon="download" target="_blank" rel="noreferrer" href={DESKTOP_APP_LINK}>
                     {t("download_desktop_app")}
                   </DropdownItem>
                 </DropdownMenuItem>
-              )}
+              )} */}
 
               {!isPlatformPages && isPlatformUser && (
                 <DropdownMenuItem className="todesktop:hidden hidden lg:flex">
