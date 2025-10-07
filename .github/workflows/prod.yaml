@@ -87,12 +87,12 @@ jobs:
 
     - name: Add .env file
       run: |
-        rm -f .env
-        touch .env
+        rm -f ./apps/api/v2/.env
+        touch ./apps/api/v2/.env
         
         # Add test variables
-        echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
-        echo "DATABASE_DIRECT_URL=${{ secrets.PROD_DATABASE_URL }}" >> .env
+        echo "DATABASE_URL=${{ secrets.PROD_DATABASE_URL }}" >> ./apps/api/v2/.env
+        echo "DATABASE_DIRECT_URL=${{ secrets.PROD_DATABASE_URL }}" >> ./apps/api/v2/.env
 
     - name: Build Docker image
       uses: docker/build-push-action@v6
