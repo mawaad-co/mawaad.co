@@ -187,7 +187,8 @@ async function createApp(
     const whiteListApps = [
       "google-calendar",
       "google-meet",
-      "whatsapp"
+      "whatsapp",
+      "telegram"
     ]
 
     if (!whiteListApps.includes(slug)) {
