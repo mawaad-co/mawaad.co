@@ -184,6 +184,17 @@ async function createApp(
   isTemplate?: boolean
 ) {
   try {
+    const whiteListApps = [
+      "google-calendar",
+      "google-meet",
+      "whatsapp"
+    ]
+
+    if (!whiteListApps.includes(slug)) {
+      console.log(`Skipping seeding app: ${slug}`);
+      return
+    }
+    
     const foundApp = await prisma.app.findFirst({
       /**
        * slug and dirName both are unique and any of them can be used to find the app uniquely
