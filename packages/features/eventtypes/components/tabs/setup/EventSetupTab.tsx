@@ -161,7 +161,7 @@ export const EventSetupTab = (
               </>
             )}
           </div>
-          {!isPlatform && (
+          {/* {!isPlatform && (
             <div className="[&_label]:my-1 [&_label]:font-normal">
               <SettingsToggle
                 title={t("translate_description_button")}
@@ -174,7 +174,7 @@ export const EventSetupTab = (
                 data-testid="ai_translation_toggle"
               />
             </div>
-          )}
+          )} */}
           {!isPlatform && interfaceLanguageOptions.length > 0 && (
             <div>
               <Skeleton

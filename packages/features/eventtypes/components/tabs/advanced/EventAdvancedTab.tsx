@@ -746,7 +746,7 @@ export const EventAdvancedTab = ({
           />
         )}
       />
-      <Controller
+      {/* <Controller
         name="hideCalendarNotes"
         render={({ field: { value, onChange } }) => (
           <SettingsToggle
@@ -765,8 +765,8 @@ export const EventAdvancedTab = ({
             onCheckedChange={(e) => onChange(e)}
           />
         )}
-      />
-      <Controller
+      /> */}
+      {/* <Controller
         name="hideCalendarEventDetails"
         render={({ field: { value, onChange } }) => (
           <SettingsToggle
@@ -784,7 +784,7 @@ export const EventAdvancedTab = ({
             onCheckedChange={(e) => onChange(e)}
           />
         )}
-      />
+      /> */}
       <Controller
         name="successRedirectUrl"
         render={({ field: { value, onChange } }) => (
@@ -861,7 +861,7 @@ export const EventAdvancedTab = ({
           </>
         )}
       />
-      {!isPlatform && (
+      {/* {!isPlatform && (
         <Controller
           name="multiplePrivateLinks"
           render={() => {
@@ -906,8 +906,8 @@ export const EventAdvancedTab = ({
             );
           }}
         />
-      )}
-      <Controller
+      )} */}
+      {/* <Controller
         name="seatsPerTimeSlotEnabled"
         render={({ field: { value, onChange } }) => (
           <>
@@ -1037,7 +1037,7 @@ export const EventAdvancedTab = ({
             {noShowFeeEnabled && <Alert severity="warning" title={t("seats_and_no_show_fee_error")} />}
           </>
         )}
-      />
+      /> */}
       <Controller
         name="hideOrganizerEmail"
         render={({ field: { value, onChange } }) => (
@@ -1118,7 +1118,7 @@ export const EventAdvancedTab = ({
           );
         }}
       />
-      <Controller
+      {/* <Controller
         name="allowReschedulingPastBookings"
         render={({ field: { value, onChange } }) => (
           <SettingsToggle
@@ -1132,9 +1132,9 @@ export const EventAdvancedTab = ({
             onCheckedChange={(e) => onChange(e)}
           />
         )}
-      />
+      /> */}
 
-      <Controller
+      {/* <Controller
         name="allowReschedulingCancelledBookings"
         render={({ field: { onChange } }) => (
           <SettingsToggle
@@ -1152,9 +1152,9 @@ export const EventAdvancedTab = ({
             }}
           />
         )}
-      />
+      /> */}
       <>
-        <Controller
+        {/* <Controller
           name="customReplyToEmail"
           render={({ field: { value, onChange } }) => (
             <>
@@ -1198,9 +1198,9 @@ export const EventAdvancedTab = ({
               </SettingsToggle>
             </>
           )}
-        />
+        /> */}
       </>
-      <Controller
+      {/* <Controller
         name="eventTypeColor"
         render={() => (
           <SettingsToggle
@@ -1285,8 +1285,8 @@ export const EventAdvancedTab = ({
             </div>
           </SettingsToggle>
         )}
-      />
-      <Controller
+      /> */}
+      {/* <Controller
         name="showOptimizedSlots"
         render={({ field: { onChange, value } }) => {
           const isChecked = value;
@@ -1308,7 +1308,7 @@ export const EventAdvancedTab = ({
             />
           );
         }}
-      />
+      /> */}
       {isRoundRobinEventType && (
         <Controller
           name="rescheduleWithSameRoundRobinHost"
