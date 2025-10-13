@@ -69,7 +69,8 @@ jobs:
   #       tags: ${{ steps.login-ecr.outputs.registry }}/${{ vars.PROD_ECR_REPO_NAME }}:${{ github.sha }}
 
   API_CI:
-    runs-on: codebuild-mawaad-${{ github.run_id }}-${{ github.run_attempt }}
+    # runs-on: codebuild-mawaad-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v5
