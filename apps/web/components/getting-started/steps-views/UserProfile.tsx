@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import { DefaultEventLocationTypeEnum } from "@calcom/app-store/locations";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { useTelemetry } from "@calcom/lib/hooks/useTelemetry";
 import { md } from "@calcom/lib/markdownIt";
@@ -18,6 +19,7 @@ import { Editor } from "@calcom/ui/components/editor";
 import { Label } from "@calcom/ui/components/form";
 import { ImageUploader } from "@calcom/ui/components/image-uploader";
 import { showToast } from "@calcom/ui/components/toast";
+import type { TCreateInputSchema } from "@calcom/trpc/server/routers/viewer/eventTypes/heavy/create.schema";
 
 type FormData = {
   bio: string;
@@ -42,6 +44,22 @@ const UserProfile = ({ user }: UserProfileProps) => {
   const telemetry = useTelemetry();
   const [firstRender, setFirstRender] = useState(true);
 
+  const defaultEventTypes = useMemo<TCreateInputSchema[]>(
+    () => [
+      {
+        title: t("30min_meeting"),
+        slug: "30min",
+        length: 30,
+        locations: [
+          {
+            type: DefaultEventLocationTypeEnum.InPerson,
+          },
+        ],
+      },
+    ],
+    [t]
+  );
+
   // Create a separate mutation for avatar updates
   const avatarMutation = trpc.viewer.me.updateProfile.useMutation({
     onSuccess: async (data) => {
@@ -59,9 +77,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
       try {
         if (eventTypes?.length === 0) {
           await Promise.all(
-            DEFAULT_EVENT_TYPES.map(async (event) => {
-              return createEventType.mutate(event);
-            })
+            defaultEventTypes.map((event) => createEventType.mutateAsync(event))
           );
         }
       } catch (error) {
@@ -94,25 +110,6 @@ const UserProfile = ({ user }: UserProfileProps) => {
       avatarUrl: newAvatar,
     });
   }
-
-  const DEFAULT_EVENT_TYPES = [
-    // {
-    //   title: t("15min_meeting"),
-    //   slug: "15min",
-    //   length: 15,
-    // },
-    {
-      title: t("30min_meeting"),
-      slug: "30min",
-      length: 30,
-    },
-    // {
-    //   title: t("secret_meeting"),
-    //   slug: "secret",
-    //   length: 15,
-    //   hidden: true,
-    // },
-  ];
 
   return (
     <form onSubmit={onSubmit}>
