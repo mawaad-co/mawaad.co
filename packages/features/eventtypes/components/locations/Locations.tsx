@@ -1,12 +1,17 @@
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ErrorMessage } from "@hookform/error-message";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import type { UseFormGetValues, UseFormSetValue, Control, FormState } from "react-hook-form";
 
 import type { EventLocationType } from "@calcom/app-store/locations";
-import { getEventLocationType, MeetLocationType } from "@calcom/app-store/locations";
+import {
+  CalVideoLocationType,
+  DefaultEventLocationTypeEnum,
+  getEventLocationType,
+  MeetLocationType,
+} from "@calcom/app-store/locations";
 import { useIsPlatform } from "@calcom/atoms/hooks/useIsPlatform";
 import type {
   LocationFormValues,
@@ -118,17 +123,24 @@ const Locations: React.FC<LocationsProps> = ({
 
   const formMethods = useFormContext<FormValues>();
 
-  const locationOptions = props.locationOptions.map((locationOption) => {
-    const options = locationOption.options.filter((option) => {
-      // Skip "Organizer's Default App" for non-team members
-      return !team?.id ? option.label !== t("organizer_default_conferencing_app") : true;
-    });
+  const locationOptions = props.locationOptions
+    .map((locationOption) => {
+      const options = locationOption.options.filter((option) => {
+        if (option.value === CalVideoLocationType) {
+          return false;
+        }
+        if (!team?.id && option.label === t("organizer_default_conferencing_app")) {
+          return false;
+        }
+        return true;
+      });
 
-    return {
-      ...locationOption,
-      options,
-    };
-  });
+      return {
+        ...locationOption,
+        options,
+      };
+    })
+    .filter((locationOption) => locationOption.options.length > 0);
 
   const [animationRef] = useAutoAnimate<HTMLUListElement>();
   const seatsEnabled = !!getValues("seatsPerTimeSlot");
@@ -152,15 +164,36 @@ const Locations: React.FC<LocationsProps> = ({
     locationOptions: props.locationOptions,
   });
 
+  const inPersonOption = useMemo(
+    () => getLocationFromType(DefaultEventLocationTypeEnum.InPerson, props.locationOptions),
+    [props.locationOptions]
+  );
   const [showEmptyLocationSelect, setShowEmptyLocationSelect] = useState(false);
-  const defaultInitialLocation = defaultValue || null;
+  const defaultInitialLocation = defaultValue || inPersonOption || null;
   const [selectedNewOption, setSelectedNewOption] = useState<SingleValueLocationOption | null>(
     defaultInitialLocation
   );
 
+  const hasInitializedDefaultLocation = useRef(false);
+  useEffect(() => {
+    if (hasInitializedDefaultLocation.current) {
+      return;
+    }
+    const existingLocations = getValues("locations") || [];
+    if (!seatsEnabled && inPersonOption && existingLocations.length === 0) {
+      append({
+        type: inPersonOption.value,
+      });
+    }
+    hasInitializedDefaultLocation.current = true;
+  }, [append, getValues, inPersonOption, seatsEnabled]);
+
   useEffect(() => {
     if (!!prefillLocation) {
       const newLocationType = prefillLocation.value;
+      if (newLocationType === CalVideoLocationType) {
+        return;
+      }
 
       const canAppendLocation = !validLocations.find((location) => location.type === newLocationType);
 
@@ -184,9 +217,9 @@ const Locations: React.FC<LocationsProps> = ({
           const eventLocationType = getEventLocationType(field.type);
           const defaultLocation = field;
 
-          const isCalVideo = field.type === "integrations:daily";
+          const isCalVideo = field.type === CalVideoLocationType;
 
-          const option = getLocationFromType(field.type, locationOptions);
+          const option = getLocationFromType(field.type, props.locationOptions);
           return (
             <li key={field.id}>
               <div className="flex w-full items-center">
